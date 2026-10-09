@@ -1,0 +1,20 @@
+{
+  "name": "cinematch-movie-recommender",
+  "version": "1.0.0",
+  "description": "Smart movie recommendation platform with IMDb ratings, synopsis, and posters",
+  "scripts": {
+    "start": "python server.py",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "movies",
+    "recommendations",
+    "imdb",
+    "mobile-friendly"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.3"
+  }
+}

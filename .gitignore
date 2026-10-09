@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+package-lock.json.bak
+
+# Local Netlify dev & build output
+.netlify/
+
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor & IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables & local secrets
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Geddi's Rec</title>
+  
+  <!-- SEO & Social Sharing Tags -->
+  <meta name="description" content="Discover and share movie recommendations on Geddi's Rec! Check IMDb ratings, synopses, and vote with reactions.">
+  <meta property="og:title" content="Geddi's Rec">
+  <meta property="og:description" content="Personal movie recommendations on Geddi's Rec with IMDb ratings, synopses, and reaction votes.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.metahub.space/poster/small/tt1375666/img">
+  
+  <!-- Mobile & PWA settings -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#07090e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍿</text></svg>">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Backdrop -->
+  <div id="ambientBackdrop" class="ambient-backdrop"></div>
+  <div class="ambient-vignette"></div>
+
+  <!-- Main Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand" id="brandHomeBtn" role="button" tabindex="0">
+        <div class="brand-logo">
+          <span class="popcorn-icon">🍿</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Geddi's <span class="gradient-text">Rec</span></span>
+        </div>
+      </div>
+
+      <!-- User Profile & Theme Action Controls -->
+      <div class="header-actions">
+        <!-- Dark / Light Mode Toggle Button -->
+        <button id="themeToggleBtn" class="btn-theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-icon moon-icon">🌙</span>
+        </button>
+
+        <!-- User Profile Pill -->
+        <button id="userProfileBtn" class="btn-profile-pill" title="Click to change your name">
+          <span id="userAvatarCircle" class="avatar-circle">?</span>
+          <span id="headerUserName" class="user-name-text">Set Name</span>
+          <svg class="icon-tiny" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Content Container -->
+  <main class="main-content">
+    
+    <!-- Hero Banner & Actions -->
+    <section class="feed-hero-section">
+      <div class="hero-top-row">
+        <div class="hero-text-wrap">
+          <div class="friends-pill-badge">
+            <span>👥</span> Friend Circle Watchlist
+          </div>
+          <h1 class="hero-title">Geddi's <span class="gradient-text">Rec</span></h1>
+          <p class="hero-subtitle">
+            Skip the endless scrolling. Browse movies hand-picked by Geddis, rate what you've watched, or add your favorite film with a personal note!
+          </p>
+        </div>
+      </div>
+
+      <!-- Big Independent Recommend Button in the Centre -->
+      <div class="recommend-center-cta">
+        <button id="heroAddRecommendBtn" class="btn-main-recommend" title="Add a movie recommendation">
+          <span class="btn-main-rec-icon">🍿</span>
+          <span class="btn-main-rec-text">+ Recommend a Movie</span>
+        </button>
+      </div>
+
+      <!-- Compact Feed Controls Bar: Search, Filter & View Toggle (Independent from Recommend) -->
+      <div class="feed-controls-bar" id="feedControlsBar">
+        <div class="feed-controls-row">
+          <div class="feed-tools-left">
+            <!-- Search Toggle Button -->
+            <button id="searchToggleBtn" class="btn-control-toggle" title="Search movies or friends" aria-expanded="false">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span class="tool-label">Search</span>
+            </button>
+
+            <!-- Filter Toggle Button -->
+            <button id="filterToggleBtn" class="btn-control-toggle" title="Filter & sort movies" aria-expanded="false">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              <span class="tool-label">Filter</span>
+              <span id="filterActiveBadge" class="filter-active-dot hidden"></span>
+            </button>
+          </div>
+
+          <!-- View Mode Toggle: Cards vs Compact List -->
+          <div class="view-mode-toggle" id="viewModeToggle" role="group" aria-label="View Mode">
+            <button class="btn-view-toggle active" id="viewCardsBtn" data-mode="cards" title="Detailed Cards View" aria-label="Detailed Cards View">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="view-icon">
+                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              </svg>
+              <span class="view-btn-label">Cards</span>
+            </button>
+            <button class="btn-view-toggle" id="viewCompactBtn" data-mode="compact" title="Compact List View" aria-label="Compact List View">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="view-icon">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              <span class="view-btn-label">Compact</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Expandable Search Box -->
+        <div id="searchExpandPanel" class="search-expand-panel hidden">
+          <div class="search-input-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="feedFilterInput" 
+              class="feed-filter-input" 
+              placeholder="Search by movie title or friend name..."
+              autocomplete="off"
+            >
+            <button id="searchClearBtn" class="search-clear-btn hidden" title="Clear search">✕</button>
+          </div>
+        </div>
+
+        <!-- Expandable Filter Panel -->
+        <div id="filterExpandPanel" class="filter-expand-panel hidden">
+          <div class="filter-dropdowns-row">
+            <!-- Friend Filter Dropdown -->
+            <div class="filter-dropdown-wrap">
+              <span class="filter-label">Friend:</span>
+              <select id="friendSelectFilter" class="filter-select">
+                <option value="all">Everyone</option>
+              </select>
+            </div>
+
+            <!-- Sort Filter Dropdown -->
+            <div class="filter-dropdown-wrap">
+              <span class="filter-label">Sort:</span>
+              <select id="sortSelectFilter" class="filter-select">
+                <option value="newest">Newest First</option>
+                <option value="most-loved">Most Loved ❤️ (incl. Begged)</option>
+                <option value="most-hated">Most Hated 🤮</option>
+                <option value="most-begged">🔥 Begged to Watch First</option>
+                <option value="highest-imdb">Highest IMDb ★</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sentiment Filter Tabs Bar -->
+          <div class="sentiment-filter-bar" id="sentimentFilterBar" role="tablist" aria-label="Sentiment Filter">
+            <button class="sentiment-tab-btn active" data-sentiment="all" role="tab" aria-selected="true">
+              <span class="tab-emoji">🍿</span>
+              <span class="tab-label">All Movies</span>
+            </button>
+            <button class="sentiment-tab-btn" data-sentiment="loved" role="tab" aria-selected="false">
+              <span class="tab-emoji">❤️</span>
+              <span class="tab-label">Most Loved</span>
+            </button>
+            <button class="sentiment-tab-btn" data-sentiment="hated" role="tab" aria-selected="false">
+              <span class="tab-emoji">🤮</span>
+              <span class="tab-label">Most Hated</span>
+            </button>
+            <button class="sentiment-tab-btn" data-sentiment="begged" role="tab" aria-selected="false">
+              <span class="tab-emoji">🔥</span>
+              <span class="tab-label">Begged to Watch</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Feed: Friend Recommendations List -->
+    <section class="friends-feed-section" id="friendsFeedSection">
+      <div class="feed-header-meta">
+        <div class="feed-heading-group">
+          <h2 class="feed-section-heading">
+            <span id="feedHeadingLabel">All Recommendations</span> (<span id="totalRecsCount">0</span>)
+          </h2>
+          <button type="button" id="feedSyncBtn" class="btn-sync-pill" title="Cloud Sync Active • Tap to refresh">
+            <span class="sync-dot live" id="syncStatusDot"></span>
+            <span class="sync-label" id="syncStatusText">Live Sync</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Movie Feed Grid / Cards List -->
+      <div id="friendsFeedGrid" class="friends-feed-grid">
+        <!-- Dynamically injected friend recommendation cards -->
+      </div>
+
+      <!-- Empty state when no matches -->
+      <div id="feedEmptyState" class="empty-feed-card hidden">
+        <div class="empty-icon">🎬</div>
+        <h3>No recommendations found</h3>
+        <p>Try clearing your search filter, or be the first to recommend a movie to your circle!</p>
+        <button id="emptyStateRecommendBtn" class="btn-primary-compact" style="margin-top:1rem;">
+          + Recommend a Movie Now
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: First-Time Welcome & Name Entry Prompt (Mandatory Onboarding) -->
+  <!-- ===================================================================== -->
+  <div id="namePromptModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card onboarding-card">
+      <div class="onboarding-graphic">
+        <span class="graphic-popcorn">🍿</span>
+      </div>
+      <h2 class="onboarding-title">Welcome to Geddi's Rec!</h2>
+      <p class="onboarding-subtitle">
+        A private platform for friends to share and vote on movie recommendations.
+      </p>
+
+      <form id="namePromptForm" class="onboarding-form">
+        <label for="userNameInput" class="input-label">What should your friends call you?</label>
+        <div class="input-with-icon">
+          <span class="input-icon">👤</span>
+          <input 
+            type="text" 
+            id="userNameInput" 
+            class="text-input-field" 
+            placeholder="Enter your name (e.g. Alex, Sarah, David...)" 
+            maxlength="30"
+            required
+            autocomplete="given-name"
+          >
+        </div>
+        <button type="submit" class="btn-primary-large">
+          <span>Join & See Recommendations 🚀</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: Add Movie Recommendation (Search + Note + Submit)             -->
+  <!-- ===================================================================== -->
+  <div id="addRecommendationModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card add-rec-card">
+      <div class="modal-header rec-modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge">🍿 Recommend to Friends</span>
+          <h3 class="modal-movie-title" id="recModalHeaderTitle">Recommend a Movie</h3>
+        </div>
+        <button id="closeAddRecBtn" class="modal-close-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- VIEW 1: Search & Selection (Search bar at top, list stretches to bottom of page/modal) -->
+      <div id="recSearchView" class="rec-stage-view">
+        <!-- Pinned Top Search Bar -->
+        <div class="rec-top-search-wrap">
+          <div class="rec-search-input-box" id="recSearchInputBox">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="recMovieSearchInput" 
+              class="rec-search-input" 
+              placeholder="Search movie title (e.g. Inception, Dune, Past Lives...)" 
+              autocomplete="off"
+            >
+            <button id="recSearchClearBtn" type="button" class="rec-search-clear-btn hidden" title="Clear search">✕</button>
+          </div>
+          <div class="rec-search-helper-bar">
+            <span id="recResultsHeaderLabel" class="rec-results-heading">✨ Popular & Suggested Movies</span>
+            <span id="recResultsCount" class="rec-results-count">Tap any to select</span>
+          </div>
+        </div>
+
+        <!-- Scrollable movie selection list stretching all the way to bottom -->
+        <div id="recAutocompleteDropdown" class="rec-results-scroll-list">
+          <!-- Dynamically populated movie cards -->
+        </div>
+      </div>
+
+      <!-- VIEW 2: Movie Selected & Details Form (Note + Verdict + Submit) -->
+      <div id="recDetailsView" class="rec-stage-view hidden">
+        <div class="rec-details-scroll-content">
+          <!-- Selected Movie Preview Card -->
+          <div id="recSelectedMoviePreview" class="selected-movie-preview">
+            <img id="recPreviewPoster" src="" alt="Poster" class="rec-preview-poster">
+            <div class="rec-preview-info">
+              <div class="rec-preview-top-row">
+                <h4 id="recPreviewTitle" class="rec-preview-title">Movie Title</h4>
+                <button type="button" id="recChangeMovieBtn" class="btn-change-movie" title="Choose a different movie">
+                  ← Change Movie
+                </button>
+              </div>
+              <div class="rec-preview-meta">
+                <span id="recPreviewYear" class="meta-tag">2024</span>
+                <span id="recPreviewImdb" class="imdb-chip-small">★ 8.8 IMDb</span>
+                <span id="recPreviewDirector" class="meta-tag">Dir. Nolan</span>
+                <a id="recPreviewWatchBtn" href="https://www.movy.sx" target="_blank" rel="noopener noreferrer" class="rec-preview-watch-pill" title="Watch on Movy.sx">
+                  <svg viewBox="0 0 24 24" fill="currentColor" style="width:10px;height:10px;">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>Watch on Movy</span>
+                </a>
+              </div>
+              <p id="recPreviewSynopsis" class="rec-preview-synopsis">Plot synopsis...</p>
+            </div>
+          </div>
+
+          <!-- Personal Note & Verdict -->
+          <div id="recFormDetails" class="form-step-group">
+            <label class="form-step-label">Your Note to Friends (Optional)</label>
+            <textarea 
+              id="recPersonalNoteInput" 
+              class="textarea-field" 
+              rows="3" 
+              placeholder="e.g. 'You HAVE to watch the plot twist at the end!' or 'Best cinematography of the year.'"
+            ></textarea>
+
+            <label class="form-step-label" style="margin-top: 1.25rem;">Your Verdict</label>
+            <div class="verdict-options-row">
+              <label class="verdict-radio-btn">
+                <input type="radio" name="initialVerdict" value="beg" checked>
+                <span class="verdict-pill beg">🙏 I beg you to watch this!</span>
+              </label>
+              <label class="verdict-radio-btn">
+                <input type="radio" name="initialVerdict" value="hyped">
+                <span class="verdict-pill hyped">🔥 Hyped to watch!</span>
+              </label>
+              <label class="verdict-radio-btn">
+                <input type="radio" name="initialVerdict" value="loved">
+                <span class="verdict-pill loved">❤️ Loved it</span>
+              </label>
+              <label class="verdict-radio-btn">
+                <input type="radio" name="initialVerdict" value="liked">
+                <span class="verdict-pill liked">👍 Liked it</span>
+              </label>
+            </div>
+
+            <button id="submitRecommendationBtn" class="btn-primary-large" style="margin-top: 1.5rem;">
+              <span>🍿 Recommend to Friends</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: Similar Movies (Secondary Feature)                           -->
+  <!-- ===================================================================== -->
+  <div id="similarMoviesModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card similar-movies-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge">✨ Smart Recommendations</span>
+          <h3 id="similarModalTitle" class="modal-movie-title">Similar to [Movie]</h3>
+          <p id="similarModalSubtitle" class="modal-subtitle">Based on genre, director, and top IMDb scores.</p>
+        </div>
+        <button id="closeSimilarBtn" class="modal-close-btn" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body-scroll">
+        <div id="similarMoviesGrid" class="similar-movies-grid">
+          <!-- Dynamically populated recommendation cards -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 4: Trailer Player                                               -->
+  <!-- ===================================================================== -->
+  <div id="trailerModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card trailer-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge">Official Trailer</span>
+          <h3 id="trailerModalTitle" class="modal-movie-title">Movie Trailer</h3>
+        </div>
+        <button id="closeTrailerBtn" class="modal-close-btn" aria-label="Close trailer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="trailer-player-container">
+        <iframe 
+          id="trailerIframe" 
+          src="" 
+          title="Movie Trailer" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="trailer-modal-footer">
+        <a id="trailerWatchMovieBtn" href="https://www.movy.sx" target="_blank" rel="noopener noreferrer" class="btn-trailer-watch-full" title="Stream full movie on Movy.sx">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>Stream it NOW!</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 5: Share Feed & QR Code Modal                                   -->
+  <!-- ===================================================================== -->
+  <div id="shareModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card share-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge">👥 Invite Friends</span>
+          <h3 class="modal-movie-title">Share Movie Feed with Friends</h3>
+        </div>
+        <button id="closeShareBtn" class="modal-close-btn" aria-label="Close share">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="share-modal-body">
+        <p class="share-instructions">
+          Send this link to your group chat so your friends can see what everyone recommended, vote with their reactions, and add their own picks!
+        </p>
+
+        <div class="qr-code-section">
+          <p class="qr-caption">📱 Nearby? Friends can scan this QR code with their phone camera:</p>
+          <div class="qr-frame">
+            <img id="shareQrCodeImg" src="" alt="Scan QR code to open on mobile" class="qr-img">
+          </div>
+        </div>
+
+        <div class="share-link-box">
+          <input type="text" id="shareLinkInput" readonly value="">
+          <button id="copyShareLinkBtn" class="copy-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy Link</span>
+          </button>
+        </div>
+
+        <div class="share-platforms-row">
+          <button id="nativeShareBtn" class="social-share-btn native-share">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>Share via WhatsApp / Messages</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Popup Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="curated-movies.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

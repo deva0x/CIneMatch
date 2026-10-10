@@ -15,14 +15,14 @@
   <!-- Mobile & PWA settings -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#07090e">
+  <meta name="theme-color" content="#0a0a0a">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍿</text></svg>">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -37,10 +37,10 @@
     <div class="header-container">
       <div class="brand" id="brandHomeBtn" role="button" tabindex="0">
         <div class="brand-logo">
-          <span class="popcorn-icon">🍿</span>
+          <svg class="popcorn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4"></path><path d="M10 22 9 8"></path><path d="m14 22 1-14"></path><path d="M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z"></path></svg>
         </div>
         <div class="brand-text">
-          <span class="brand-title">Geddi's <span class="gradient-text">Rec</span></span>
+          <span class="brand-title">Geddi's Rec</span>
         </div>
       </div>
 
@@ -48,8 +48,8 @@
       <div class="header-actions">
         <!-- Dark / Light Mode Toggle Button -->
         <button id="themeToggleBtn" class="btn-theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
-          <span class="theme-icon sun-icon">☀️</span>
-          <span class="theme-icon moon-icon">🌙</span>
+          <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+          <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
         </button>
 
         <!-- User Profile Pill -->
@@ -73,7 +73,7 @@
       <div class="hero-top-row">
         <div class="hero-text-wrap">
           <div class="friends-pill-badge">
-            <span>👥</span> Friend Circle Watchlist
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Friend Circle Watchlist
           </div>
           <h1 class="hero-title">Geddi's <span class="gradient-text">Rec</span></h1>
           <p class="hero-subtitle">
@@ -85,8 +85,8 @@
       <!-- Big Independent Recommend Button in the Centre -->
       <div class="recommend-center-cta">
         <button id="heroAddRecommendBtn" class="btn-main-recommend" title="Add a movie recommendation">
-          <span class="btn-main-rec-icon">🍿</span>
-          <span class="btn-main-rec-text">+ Recommend a Movie</span>
+          <svg class="btn-main-rec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+          <span class="btn-main-rec-text">Recommend a Movie</span>
         </button>
       </div>
 
@@ -152,7 +152,7 @@
               placeholder="Search by movie title or friend name..."
               autocomplete="off"
             >
-            <button id="searchClearBtn" class="search-clear-btn hidden" title="Clear search">✕</button>
+            <button id="searchClearBtn" class="search-clear-btn hidden" title="Clear search" aria-label="Clear search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
           </div>
         </div>
 
@@ -224,11 +224,12 @@
 
       <!-- Empty state when no matches -->
       <div id="feedEmptyState" class="empty-feed-card hidden">
-        <div class="empty-icon">🎬</div>
+        <div class="empty-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"></path><path d="m6.2 5.3 3.1 3.9"></path><path d="m12.4 3.4 3.1 4"></path><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path></svg></div>
         <h3>No recommendations found</h3>
         <p>Try clearing your search filter, or be the first to recommend a movie to your circle!</p>
-        <button id="emptyStateRecommendBtn" class="btn-primary-compact" style="margin-top:1rem;">
-          + Recommend a Movie Now
+        <button id="emptyStateRecommendBtn" class="btn-primary-compact">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+          Recommend a Movie Now
         </button>
       </div>
     </section>
@@ -241,7 +242,7 @@
   <div id="namePromptModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
     <div class="modal-card onboarding-card">
       <div class="onboarding-graphic">
-        <span class="graphic-popcorn">🍿</span>
+        <svg class="graphic-popcorn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4"></path><path d="M10 22 9 8"></path><path d="m14 22 1-14"></path><path d="M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z"></path></svg>
       </div>
       <h2 class="onboarding-title">Welcome to Geddi's Rec!</h2>
       <p class="onboarding-subtitle">
@@ -251,7 +252,7 @@
       <form id="namePromptForm" class="onboarding-form">
         <label for="userNameInput" class="input-label">What should your friends call you?</label>
         <div class="input-with-icon">
-          <span class="input-icon">👤</span>
+          <span class="input-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg></span>
           <input 
             type="text" 
             id="userNameInput" 
@@ -263,7 +264,7 @@
           >
         </div>
         <button type="submit" class="btn-primary-large">
-          <span>Join & See Recommendations 🚀</span>
+          <span>Join & See Recommendations</span>
         </button>
       </form>
     </div>
@@ -276,14 +277,11 @@
     <div class="modal-card add-rec-card">
       <div class="modal-header rec-modal-header">
         <div class="modal-title-wrap">
-          <span class="modal-badge">🍿 Recommend to Friends</span>
+          <span class="modal-badge">Recommend to Friends</span>
           <h3 class="modal-movie-title" id="recModalHeaderTitle">Recommend a Movie</h3>
         </div>
         <button id="closeAddRecBtn" class="modal-close-btn" aria-label="Close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
 
@@ -303,7 +301,7 @@
               placeholder="Search movie title (e.g. Inception, Dune, Past Lives...)" 
               autocomplete="off"
             >
-            <button id="recSearchClearBtn" type="button" class="rec-search-clear-btn hidden" title="Clear search">✕</button>
+            <button id="recSearchClearBtn" type="button" class="rec-search-clear-btn hidden" title="Clear search" aria-label="Clear search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
           </div>
           <div class="rec-search-helper-bar">
             <span id="recResultsHeaderLabel" class="rec-results-heading">✨ Popular & Suggested Movies</span>
@@ -327,7 +325,7 @@
               <div class="rec-preview-top-row">
                 <h4 id="recPreviewTitle" class="rec-preview-title">Movie Title</h4>
                 <button type="button" id="recChangeMovieBtn" class="btn-change-movie" title="Choose a different movie">
-                  ← Change Movie
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> Change Movie
                 </button>
               </div>
               <div class="rec-preview-meta">
@@ -355,7 +353,7 @@
               placeholder="e.g. 'You HAVE to watch the plot twist at the end!' or 'Best cinematography of the year.'"
             ></textarea>
 
-            <label class="form-step-label" style="margin-top: 1.25rem;">Your Verdict</label>
+            <label class="form-step-label">Your Verdict</label>
             <div class="verdict-options-row">
               <label class="verdict-radio-btn">
                 <input type="radio" name="initialVerdict" value="beg" checked>
@@ -375,8 +373,9 @@
               </label>
             </div>
 
-            <button id="submitRecommendationBtn" class="btn-primary-large" style="margin-top: 1.5rem;">
-              <span>🍿 Recommend to Friends</span>
+            <button id="submitRecommendationBtn" class="btn-primary-large">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4"></path><path d="M10 22 9 8"></path><path d="m14 22 1-14"></path><path d="M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z"></path></svg>
+              <span>Recommend to Friends</span>
             </button>
           </div>
         </div>
@@ -391,15 +390,12 @@
     <div class="modal-card similar-movies-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <span class="modal-badge">✨ Smart Recommendations</span>
+          <span class="modal-badge">Smart Recommendations</span>
           <h3 id="similarModalTitle" class="modal-movie-title">Similar to [Movie]</h3>
           <p id="similarModalSubtitle" class="modal-subtitle">Based on genre, director, and top IMDb scores.</p>
         </div>
         <button id="closeSimilarBtn" class="modal-close-btn" aria-label="Close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
 
@@ -422,10 +418,7 @@
           <h3 id="trailerModalTitle" class="modal-movie-title">Movie Trailer</h3>
         </div>
         <button id="closeTrailerBtn" class="modal-close-btn" aria-label="Close trailer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
       <div class="trailer-player-container">
@@ -456,14 +449,11 @@
     <div class="modal-card share-modal-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <span class="modal-badge">👥 Invite Friends</span>
+          <span class="modal-badge">Invite Friends</span>
           <h3 class="modal-movie-title">Share Movie Feed with Friends</h3>
         </div>
         <button id="closeShareBtn" class="modal-close-btn" aria-label="Close share">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
       
@@ -473,7 +463,7 @@
         </p>
 
         <div class="qr-code-section">
-          <p class="qr-caption">📱 Nearby? Friends can scan this QR code with their phone camera:</p>
+          <p class="qr-caption">Nearby? Friends can scan this QR code with their phone camera:</p>
           <div class="qr-frame">
             <img id="shareQrCodeImg" src="" alt="Scan QR code to open on mobile" class="qr-img">
           </div>

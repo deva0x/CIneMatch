@@ -106,6 +106,10 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Guard against any stray wide content making phones zoom out; set on
+     html so it applies to the viewport and keeps the sticky header working */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -424,6 +428,18 @@ button:disabled,
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
+}
+
+/* Long values (several directors) wrap inside the chip instead of
+   pushing the card wider than a phone screen */
+.meta-tag {
+  max-width: 100%;
+  height: auto;
+  min-height: 22px;
+  padding-block: 4px;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .imdb-chip-small {
